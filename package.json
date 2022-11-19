@@ -1,7 +1,7 @@
 {
-  "name": "authenticate-me",
+  "name": "airbnbproject",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Database Schema Design",
   "main": "index.js",
   "scripts": {
     "install": "npm --prefix backend install backend",
@@ -11,7 +11,15 @@
     "start": "npm start --prefix backend",
     "build": "npm run --prefix backend build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikeyvaldez/AirBnB-Clone.git"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikeyvaldez/AirBnB-Clone/issues"
+  },
+  "homepage": "https://github.com/mikeyvaldez/AirBnB-Clone#readme"
 }
