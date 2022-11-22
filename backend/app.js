@@ -5,17 +5,14 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const { ValidationError } = require('sequelize');
-
 const { environment } = require('./config');
 const isProduction = environment === 'production';
-
 const app = express();
+const { ValidationError } = require('sequelize');
 
-const routes = require('./routes');
+
 
 app.use(morgan('dev'));
-
 app.use(cookieParser());
 app.use(express.json());
 
@@ -31,7 +28,7 @@ app.use(
   helmet.crossOriginResourcePolicy({
     policy: "cross-origin"
   })
-);
+  );
 
 // Set the _csrf token and create req.csrfToken method
 app.use(
@@ -43,6 +40,10 @@ app.use(
     }
   })
 );
+
+// backend/app.js
+const routes = require('./routes');
+
 
 app.use(routes); // Connect all the routes
 
