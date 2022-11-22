@@ -4,7 +4,7 @@ const usersRouter = require('./users.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 
-router.get('/test', requireAuth, (req, res) => {
+router.get('/test', (req, res) => {
   res.json( {message: 'success'})
 })
 
