@@ -1,21 +1,13 @@
 const express = require('express');
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
-
+const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const router = express.Router();
 
 
 const validateSignup = [
-  check('firstName')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide valid first name'),
-  check('lastName')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide valid last name'),
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
@@ -40,8 +32,8 @@ router.post(
   '/',
   validateSignup,
   async (req, res) => {
-    const { firstName, lastName, email, username, password } = req.body;
-    const user = await User.signup({ firstName, lastName, email, username, password });
+    const { email, firstName, lastName, username, password } = req.body;
+    const user = await User.signup({ email, firstName, lastName, username, password });
 
     await setTokenCookie(res, user);
 
