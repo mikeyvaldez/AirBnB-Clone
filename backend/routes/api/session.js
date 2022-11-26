@@ -25,12 +25,12 @@ router.post('/', validateLogin, async (req, res, next) => {
     if (!user) {
       res.status(401);
       res.json({
-        "message": "invalid credentials",
+        "message": "Invalid Credentials",
         "statusCode": 401
       })
     }
 
-    await setTokenCookie(res, user);
+    user.token = await setTokenCookie(res, user);
 
     let myObj = {
       id: user.id,
