@@ -69,13 +69,13 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-// // Create a spot
-// router.post('/', validateSpot, requireAuth, async (req, res, next) => {
-//   const ownerId = req.user.ownerId
+// Create a spot
+router.post('/', validateSpot, requireAuth, async (req, res, next) => {
+  const ownerId = req.user.ownerId
 
-//   const newSpot = await Spot.create({ ownerId, ...req.body })
-//   res.json(newSpot)
-// })
+  const newSpot = await Spot.create({ ownerId, ...req.body })
+  res.json(newSpot)
+})
 
 
 
