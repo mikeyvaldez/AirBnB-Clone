@@ -40,14 +40,6 @@ const validateSpot = [
 ]
 
 
-// Create a spot
-router.post('/', validateSpot, requireAuth, async (req, res, next) => {
-  const ownerId = req.user.ownerId
-
-  const newSpot = await Spot.create({ ownerId, ...req.body })
-  res.json(newSpot)
-})
-
 
 // GET all spots
 router.get('/', async (req, res) => {
@@ -58,7 +50,32 @@ router.get('/', async (req, res) => {
 
   res.status(200)
   res.json(spots)
-})
+});
+
+// GET all spots of current user
+router.get('/current', requireAuth, async (req, res) => {
+  const ownerId = req.user.id;
+  const spots = await Spot.findAll({where: {ownerId}});
+
+  let currentUserSpots = [];
+
+  spots.forEach( spot => {
+    currentUserSpots.push(spot.toJSON())
+  })
+
+  res.status(200)
+  res.json({Spot:currentUserSpots})
+});
+
+
+
+// // Create a spot
+// router.post('/', validateSpot, requireAuth, async (req, res, next) => {
+//   const ownerId = req.user.ownerId
+
+//   const newSpot = await Spot.create({ ownerId, ...req.body })
+//   res.json(newSpot)
+// })
 
 
 
