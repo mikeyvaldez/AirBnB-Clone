@@ -4,7 +4,7 @@
 // add to all seeders and migrations
 let options = {};
 if(process.env.NODE_ENV === 'production'){
-  options.schema = prcess.env.SCHEMA; // define your schema in options object
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 
@@ -77,7 +77,7 @@ module.exports = {
       }
     }, options);
   },
-  
+
   async down(queryInterface, Sequelize) {
     options.tableName = 'Spots';
     await queryInterface.dropTable(options);
