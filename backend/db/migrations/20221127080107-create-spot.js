@@ -68,12 +68,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      },
-      avgRating: {
-        type: Sequelize.DECIMAL
-      },
-      previewImage: {
-        type: Sequelize.STRING
       }
     }, options);
   },
