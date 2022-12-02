@@ -7,12 +7,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE"
+        type: Sequelize.INTEGER
       },
       ownerId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Users', key: 'id'},
+        allowNull: false,
+        references: {model: 'User', key: 'id'},
         onDelete: 'CASCADE',
         hooks:true
       },
