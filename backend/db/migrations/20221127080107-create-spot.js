@@ -1,4 +1,13 @@
 'use strict';
+
+
+// add to all seeders and migrations
+let options = {};
+if(process.env.NODE_ENV === 'production'){
+  options.schema = prcess.env.SCHEMA; // define your schema in options object
+}
+
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -12,7 +21,7 @@ module.exports = {
       ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'User', key: 'id'},
+        references: {model: 'Users', key: 'id'},
         onDelete: 'CASCADE',
         hooks:true
       },
@@ -66,9 +75,11 @@ module.exports = {
       previewImage: {
         type: Sequelize.STRING
       }
-    });
+    }, options);
   },
+  
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Spots');
+    options.tableName = 'Spots';
+    await queryInterface.dropTable(options);
   }
 };
