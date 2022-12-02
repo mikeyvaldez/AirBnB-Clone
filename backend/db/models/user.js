@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define associatte here
+      User.hasMany(models.Spot, { foreignKey: 'ownerId' })
     }
   };
 
