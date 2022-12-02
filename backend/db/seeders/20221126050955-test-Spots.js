@@ -2,7 +2,7 @@
 
 let options = {}
 if(process.env.NODE_ENV === 'production'){
-  options.shcema = process.env.SCHEMA // define your shcema in options object
+  options.schema = process.env.SCHEMA // define your shcema in options object
 }
 
 /** @type {import('sequelize-cli').Migration} */
