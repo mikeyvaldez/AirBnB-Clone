@@ -45,7 +45,7 @@ const validateSpot = [
 router.get('/', async (req, res) => {
 
   let spots = await Spot.findAll({
-    attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt', 'avgRating', 'previewImage'],
+    attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt'],
   })
 
   res.status(200)
