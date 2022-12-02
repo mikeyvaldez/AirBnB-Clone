@@ -54,8 +54,9 @@ router.get('/', async (req, res) => {
 
 // GET all spots of current user
 router.get('/current', requireAuth, async (req, res) => {
-  const ownerId = req.user.id;
+  const ownerId = +req.user.id;
   const spots = await Spot.findAll({where: {ownerId}});
+  console.log()
 
   let currentUserSpots = [];
 

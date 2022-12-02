@@ -38,11 +38,7 @@ router.post('/', validateSignup, async (req, res) => {
     const { firstName, lastName, email, username, password } = req.body;
 
     const emailAlreadyExists = await User.findOne({
-      where: { email: email }
-    });
-
-    const usernameAlreadyExists = await User.findOne({
-      where: { username: username}
+      where: { email }
     });
 
     if(emailAlreadyExists){
@@ -52,30 +48,31 @@ router.post('/', validateSignup, async (req, res) => {
         statusCode: 403,
         errors: "User with that email already exists"
       })
-    } else if(usernameAlreadyExists){
+    }
+
+    const usernameAlreadyExists = await User.findOne({
+      where: { username }
+    });
+
+    if(usernameAlreadyExists){
       res.status(403)
       res.json({
         message: "User already exists",
         statusCode: 403,
         errors: "User with that username already exists"
       })
-    } else {
-      
-      const user = await User.signup({ firstName, lastName, email, username, password });
-
-      await setTokenCookie(res, user);
-
-      let myObj = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        token: ""
-      }
-
-      res.status(200);
-      res.json(myObj);
     }
+
+    const user = await User.signup({ firstName, lastName, email, username, password });
+
+    await setTokenCookie(res, user);
+
+
+    res.status(200);
+    res.json({
+      user: user
+    });
+
 });
 
 
