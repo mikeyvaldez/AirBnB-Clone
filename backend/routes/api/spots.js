@@ -73,7 +73,7 @@ router.get('/current', requireAuth, async (req, res) => {
 router.post('/', validateSpot, requireAuth, async (req, res, next) => {
   const ownerId = req.user.ownerId
 
-  const newSpot = await Spot.create({ ownerId, ...req.body })
+  const newSpot = await Spot.create({ownerId, ...req.body})
   res.json(newSpot)
 })
 
