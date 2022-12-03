@@ -30,13 +30,19 @@ router.post('/', validateLogin, async (req, res, next) => {
       return next(err);
     }
 
-    await setTokenCookie(res, user);
+    user.token = await setTokenCookie(res, user);
 
-    return res.json({
-      user: user
-    })
+    let myObj = {
+      id: user.id,
+      firstName: user.lastName,
+      email: user.email,
+      username: user.username,
+      token: ""
+    }
 
-});
+    return res.json(myObj)
+  }
+);
 
 
 // Log out
@@ -47,14 +53,15 @@ router.delete( '/',  (_req, res) => {
 });
 
 // Restore session user
-router.get( '/', (req, res) => {
+router.get( '/', restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
     return res.json({
       user: user.toSafeObject()
     });
   } else return res.json({ user: null });
-});
+  }
+);
 
 
 
