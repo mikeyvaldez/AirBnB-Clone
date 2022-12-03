@@ -51,7 +51,7 @@ router.post('/', validateSignup, async (req, res) => {
     }
 
     const usernameAlreadyExists = await User.findOne({
-      where: { username }
+      where: {username}
     });
 
     if(usernameAlreadyExists){
