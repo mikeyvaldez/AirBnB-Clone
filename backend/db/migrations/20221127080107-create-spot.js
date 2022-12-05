@@ -1,6 +1,5 @@
 'use strict';
 
-
 // add to all seeders and migrations
 let options = {};
 if(process.env.NODE_ENV === 'production'){
