@@ -24,14 +24,14 @@ module.exports = {
         url: 'url3',
         preview: true,
       }
-    ])
+    ],{})
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1,2,3]}
+      id: { [Op.in]: [1,2,3] }
     },{});
   }
 };

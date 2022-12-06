@@ -41,7 +41,7 @@ module.exports = {
         review: "Crazy how a place can feel so much like home or you want it to be your home.",
         stars: 4.5
       }
-    ])
+    ],{})
 
   },
 
