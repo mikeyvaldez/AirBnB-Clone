@@ -169,7 +169,45 @@ router.get('/:spotId', async (req, res) => {
 
 })
 
+//Edit a spot
+router.put('/:spotId', validateSpot, requireAuth, async (req, res) => {
+  //find the spot with spotId
+  const spot = await Spot.findByPk(req.params.spotId)
 
+  //check to make sure the user is also the owner of the spot -> basically the user id === ownerId.
+  //if the spot does not exist, return a 404 error with the message and statusCode in the readme.
+  if(!spot){
+    res.statusCode = 404;
+    res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  } else if (spot.ownerId === req.user.id){
+
+    // if thats good, update the spot record and return the data with all  the attributes included in the readme.
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    if(address) spot.address = address
+    if(city) spot.city = city
+    if(state) spot.state = state
+    if(country) spot.country = country
+    if(lat) spot.lat = lat
+    if(lng) spot.lng = lng
+    if(name) spot.name = name
+    if(description) spot.description = description
+    if(price) spot.price = price
+
+    await spot.save()
+    res.json(spot)
+    // if validate spot is violated, return an arror response with status code 400. -> thats validateSpot
+  } else {
+    res.statusCode = 403
+    res.json({
+      "message": "You are not authorized",
+      "statusCode": 403
+    })
+  }
+})
 
 // Create a spot
 router.post('/', validateSpot, requireAuth, async (req, res, next) => {
