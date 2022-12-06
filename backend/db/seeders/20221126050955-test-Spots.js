@@ -46,7 +46,7 @@ module.exports = {
         description: "You can search for anything here",
         price: 175
       }
-    ])
+    ], {})
   },
 
   async down (queryInterface, Sequelize) {
