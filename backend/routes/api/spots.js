@@ -76,11 +76,13 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
   return res.json(newImage);
 })
 
+
+
 // GET all spots of current user
 router.get('/current', requireAuth, async (req, res) => {
   const ownerId = +req.user.id;
   const spots = await Spot.findAll({where: {ownerId}});
-  console.log()
+  // console.log()
 
   let currentUserSpots = [];
 
@@ -91,6 +93,81 @@ router.get('/current', requireAuth, async (req, res) => {
   res.status(200)
   res.json({Spot:currentUserSpots})
 });
+
+
+// GET details of a Spot by Id
+router.get('/:spotId', async (req, res) => {
+  const spots = await Spot.findByPk(req.params.spotId, {
+    include: [
+      {
+        model: SpotImage,
+        attributes: ["id", "url", "preview"]
+      },
+      {
+        model: User,
+        as: "Owner",
+        attributes: ["id", "firstName", "lastName"]
+      }
+    ]
+  });
+
+  if(!spots){
+    res.statusCode = 404;
+    res.json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
+  } else {
+
+    const numReviews = await Review.count({
+      where: spots.id
+    })
+
+    const spotRatings = await Review.findAll({
+      where: {
+        spotId: spots.id
+      },
+      attributes: ["stars"]
+    })
+
+    let stars = 0;
+    spotRatings.forEach( rating => {
+      stars += rating.stars
+    })
+
+    const avgStarRating = stars / spotRatings.length;
+
+    let avgRating = "no reviews";
+
+    if(avgStarRating){
+      avgRating = avgStarRating
+    }
+
+    const data = {
+      id: spots.id,
+      ownerId: spots.ownerId,
+      address: spots.address,
+      city: spots.city,
+      state: spots.state,
+      country: spots.country,
+      lat: spots.lat,
+      lng: spots.lng,
+      name: spots.name,
+      description: spots.description,
+      price: spots.price,
+      createdAt: spots.createdAt,
+      updatedAt: spots.updateAt,
+      numReviews: numReviews,
+      avgStarRating: avgRating,
+      SpotImage: spots.SpotImage,
+      Owner: spots.Owner
+    };
+
+    res.json(data);
+
+  }
+
+})
 
 
 
