@@ -42,7 +42,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
   const imagesCount = await ReviewImage.findAll({
     where: { reviewId }
   })
-  console.log(imagesCount)
+  // console.log(imagesCount)
 
   if(imagesCount.length >= 10){
     res.statusCode = 403;
