@@ -23,7 +23,7 @@ module.exports = {
         reviewId: 3,
         url: 'review3url'
       }
-    ], {})
+    ],{})
   },
 
   async down (queryInterface, Sequelize) {
